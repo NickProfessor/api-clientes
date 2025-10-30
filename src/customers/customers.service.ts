@@ -1,6 +1,5 @@
-import { HttpCode, Injectable, NotFoundException, Res } from "@nestjs/common"
+import { Injectable, NotFoundException } from "@nestjs/common"
 import { CustomersRepository } from "./customers.repository"
-import { NotFoundError } from "rxjs";
 
 @Injectable()
 export class CustomersService{

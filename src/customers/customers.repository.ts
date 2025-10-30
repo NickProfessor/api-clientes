@@ -1,6 +1,4 @@
-    import { Injectable, NotFoundException } from "@nestjs/common"
-    import { CreateCustomersDTO } from "./dto/CreateCustomers.dto"
-import { NotFoundError } from "rxjs"
+    import { Injectable } from "@nestjs/common"
 
     @Injectable()
     export class CustomersRepository{
@@ -10,7 +8,7 @@ import { NotFoundError } from "rxjs"
             return this.customers
         }
 
-        create(customer: CreateCustomersDTO){
+        create(customer){
             const last_customer = this.customers[this.customers.length - 1]
             const newId = last_customer ? last_customer.id + 1 : 1
             const newCustomer = new Customer

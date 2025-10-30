@@ -1,6 +1,6 @@
 import { IsEmail, IsString, MinLength } from "class-validator"
 
-export class CreateCustomersDTO{
+export class UpsertCustomersDTO{
     @IsString({message: "Name need a string value"})
     @MinLength(3, {message: "Min 3 chars"})
     name: string
