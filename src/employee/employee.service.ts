@@ -1,39 +1,41 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpsertEmployeeDTO } from './dto/UpsertEmployee.dto';
-import { EmployeeRepository } from './employee.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Employee } from './employee.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class EmployeeService {
-  constructor(private employeeRepository: EmployeeRepository){}
-  create(createEmployeeDto: UpsertEmployeeDTO) {
-    return this.employeeRepository.create(createEmployeeDto)
-  }
+  constructor(
+    @InjectRepository(Employee)
+    private readonly employeeRepo: Repository<Employee>
+  ){}
 
   findAll() {
-    return this.employeeRepository.findAll()
+    return this.employeeRepo.find()
   }
 
-  findOne(id: number) {
-    const response = this.employeeRepository.findOne(id)
-    if(!response){
-      throw new NotFoundException("Funcionário não encontrado")
+  // findOne(id: number) {
+  //   const response = this.employeeRepo.findOne(id)
+  //   if(!response){
+  //     throw new NotFoundException("Funcionário não encontrado")
+  //   }
+  //   return response
+  // }
+  
+    createEmployee(data: Partial<Employee>) {
+      const customer = this.employeeRepo.create(data);
+      return this.employeeRepo.save(customer);
     }
-    return response
-  }
-
-  update(id: number, updateEmployeeDto: UpsertEmployeeDTO) {
-    const response = this.employeeRepository.update(id, updateEmployeeDto)
-    if(!response){
-      throw new NotFoundException("Funcionário não encontrado")
+  
+    async updateEmployee(id: number, body: Partial<Employee>) {
+      await this.employeeRepo.update(id, body);
+      return this.employeeRepo.findOne({ where: { id } });
     }
-    return response 
-  }
-
-  remove(id: number) {
-    const response = this.employeeRepository.remove(id)
-    if(!response){
-      throw new NotFoundException("Funcionário não encontrado")
+  
+    async removeEmployee(id: number) {
+      const old = await this.employeeRepo.findOne({ where: { id } });
+      if (old) await this.employeeRepo.delete(id);
+      return old;
     }
-    return response
-  }
 }

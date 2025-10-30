@@ -13,7 +13,7 @@ async function bootstrap() {
   )
 
   const config = new DocumentBuilder()
-  .setTitle("Api Customers")
+  .setTitle("Api Customer")
   .setDescription("")
   .setVersion("1.0")
   .build()

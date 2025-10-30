@@ -8,7 +8,7 @@ export class EmployeeController {
 
   @Post()
   create(@Body() createEmployeeDto: UpsertEmployeeDTO) {
-    return this.employeeService.create(createEmployeeDto);
+    return this.employeeService.createEmployee(createEmployeeDto);
   }
 
   @Get()
@@ -16,18 +16,18 @@ export class EmployeeController {
     return this.employeeService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.employeeService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.employeeService.(+id);
+  // }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateEmployeeDto: UpsertEmployeeDTO) {
-    return this.employeeService.update(+id, updateEmployeeDto);
+    return this.employeeService.updateEmployee(+id, updateEmployeeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.employeeService.remove(+id);
+    return this.employeeService.removeEmployee(+id);
   }
 }
